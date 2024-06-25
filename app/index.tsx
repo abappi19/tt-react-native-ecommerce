@@ -12,7 +12,9 @@ const InitialScreen = () => {
 
   const handleInitialRoute = () => {
     if (!token) {
-      router.dismissAll();
+      if (router.canDismiss()) {
+        router.dismissAll();
+      }
       router.replace(AppRouterPath.auth.login);
     }
   };

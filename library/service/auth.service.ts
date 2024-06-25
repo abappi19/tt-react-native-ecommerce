@@ -5,6 +5,8 @@ import {
   TValidAuthLoginSchema,
   ValidAuthLoginSchema,
 } from "../validation/auth.validation";
+import { useQueryAuthLogin } from "../query/auth.query";
+import { UserSchema } from "../schema/user.schema";
 
 export function useServiceAuthValidate() {
   const { removeToken, token, updateToken } = useStoreAuth();
@@ -18,9 +20,14 @@ export function useServiceAuthValidate() {
   };
 }
 
-export function useServiceAuthLogin() {
+export function useServiceAuthLogin({
+  onComplete,
+}: {
+  onComplete: (isSuccess: boolean) => void;
+}) {
   const { removeToken, token, updateToken } = useStoreAuth();
-  
+
+  const { mutate, isLoading } = useQueryAuthLogin();
 
   const hookForm = useForm<TValidAuthLoginSchema>({
     resolver: zodResolver(ValidAuthLoginSchema),
@@ -30,12 +37,24 @@ export function useServiceAuthLogin() {
     },
   });
 
-  const login = hookForm.handleSubmit((data)=>{
-    
+  const login = hookForm.handleSubmit((data) => {
+    mutate(data, {
+      onSuccess(response) {
+        
+        
+
+      },
+      onError(error, variables, context) {
+        onComplete(false);
+      },
+    });
   });
 
-
-
+  return {
+    isLoading,
+    hookForm,
+    login,
+  };
 }
 export function useServiceAuthLogout() {
   const { removeToken, token, updateToken } = useStoreAuth();

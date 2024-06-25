@@ -5,7 +5,9 @@ import { RequestSchemas } from "../schema/request.schema";
 export const useQueryAuthLogin = () =>
   useMutation<
     {
-      token: string;
+      data: {
+        token: string;
+      };
     },
     unknown,
     RequestSchemas.LoginSchema

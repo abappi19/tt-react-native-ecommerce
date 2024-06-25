@@ -1,9 +1,8 @@
 import { AppRouterPath } from "@/library/constants/app-router-path";
-import { useServiceAuthValidate } from "@/library/service/auth.service";
 import { useStoreAuth } from "@/library/store/auth.store";
 import { router } from "expo-router";
 import React, { useEffect, useState } from "react";
-import { ActivityIndicator, Text, View } from "react-native";
+import { ActivityIndicator, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const InitialScreen = () => {

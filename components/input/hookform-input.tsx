@@ -14,17 +14,17 @@ import {
   TextInputProps,
   TextStyle,
   View,
-  ViewStyle,
 } from "react-native";
 
 function HookformTextInput<TFieldValues extends FieldValues>({
   name,
   hookForm,
+  className,
   ...props
 }: TextInputProps & {
   style?: StyleProp<TextStyle>;
-//   isPasswordInput?: boolean;
-//   containerStyle?: StyleProp<ViewStyle>;
+  //   isPasswordInput?: boolean;
+  //   containerStyle?: StyleProp<ViewStyle>;
   name: FieldPath<TFieldValues>;
   hookForm: UseFormReturn<TFieldValues>;
 }) {
@@ -40,8 +40,9 @@ function HookformTextInput<TFieldValues extends FieldValues>({
       name={name}
       control={control}
       render={({ field: { value, onBlur, onChange } }) => (
-        <View className="w-[100%]">
+        <View className={`w-[100%] ${className}`}>
           <TextInput
+            className="bg-[#ddd] rounded-sm p-2"
             {...props}
             value={value}
             onBlur={onBlur}

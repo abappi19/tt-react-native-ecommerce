@@ -1,31 +1,38 @@
 import { create } from "zustand";
+import * as SecureStore from "expo-secure-store";
+import { SecureStoreKey } from "../constants/secure-store-key";
 
-type AuthStore = {
+
+type AuthStoreSchema = {
   token: string | null;
   updateToken: (token: string) => void;
   removeToken: () => void;
 };
 
-const useAuthStore = create<AuthStore>((set) => ({
-  token: null,
+const AuthStore = create<AuthStoreSchema>((set) => ({
+  token: SecureStore.getItem(SecureStoreKey.KEY_AUTH_TOKEN),
   updateToken(token) {
-    set((state) => ({
-      ...state,
-      token,
-    }));
+    SecureStore.setItemAsync(SecureStoreKey.KEY_AUTH_TOKEN, token).then(() =>
+      set((state) => ({
+        ...state,
+        token,
+      }))
+    );
   },
   removeToken() {
-    set((state) => ({
-      ...state,
-      token: null,
-    }));
+    SecureStore.deleteItemAsync(SecureStoreKey.KEY_AUTH_TOKEN).then(() =>
+      set((state) => ({
+        ...state,
+        token: null,
+      }))
+    );
   },
 }));
 
-export const useStoreAuth = () => {
-  const token = useAuthStore((state) => state.token);
-  const updateToken = useAuthStore((state) => state.updateToken);
-  const removeToken = useAuthStore((state) => state.removeToken);
+export const useAuthStore = () => {
+  const token = AuthStore((state) => state.token);
+  const updateToken = AuthStore((state) => state.updateToken);
+  const removeToken = AuthStore((state) => state.removeToken);
 
   return {
     token,

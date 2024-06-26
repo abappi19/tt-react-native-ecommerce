@@ -1,16 +1,16 @@
-import { useForm } from "react-hook-form";
-import { useStoreAuth } from "../store/auth.store";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { useHandleError } from "../hooks/use-handle-error";
+import { useQueryAuthLogin } from "../query/auth.query";
+import { useAuthStore } from "../store/auth.store";
 import {
   TValidAuthLoginSchema,
   ValidAuthLoginSchema,
 } from "../validation/auth.validation";
-import { useQueryAuthLogin } from "../query/auth.query";
-import { UserSchema } from "../schema/user.schema";
+import { useErrorStore } from "../store/error.store";
 
-export function useServiceAuthValidate() {
-  const { removeToken, token, updateToken } = useStoreAuth();
-
+export function useAuthValidateService() {
+  const { token } = useAuthStore();
   const validateAuth = () => {
     return token != null;
   };
@@ -20,13 +20,13 @@ export function useServiceAuthValidate() {
   };
 }
 
-export function useServiceAuthLogin({
+export function useAuthLoginService({
   onComplete,
 }: {
   onComplete: (isSuccess: boolean) => void;
 }) {
-  const { removeToken, token, updateToken } = useStoreAuth();
-
+  const { addError } = useErrorStore();
+  const { token, updateToken } = useAuthStore();
   const { mutate, isLoading } = useQueryAuthLogin();
 
   const hookForm = useForm<TValidAuthLoginSchema>({
@@ -40,12 +40,14 @@ export function useServiceAuthLogin({
   const login = hookForm.handleSubmit((data) => {
     mutate(data, {
       onSuccess(response) {
-        
-        
-
+        if (response.data.token) {
+          updateToken(response.data.token);
+          onComplete(true);
+        }
       },
       onError(error, variables, context) {
-        onComplete(false);
+        // console.log("error: ", );
+        addError(error as string);
       },
     });
   });
@@ -56,10 +58,13 @@ export function useServiceAuthLogin({
     login,
   };
 }
-export function useServiceAuthLogout() {
-  const { removeToken, token, updateToken } = useStoreAuth();
+export function useAuthLogoutService({ onLogout }: { onLogout: () => void }) {
+  const { token, removeToken } = useAuthStore();
 
-  const logout = () => removeToken();
+  const logout = () => {
+    removeToken();
+    onLogout();
+  };
 
   return {
     logout,

@@ -1,13 +1,13 @@
 import { create } from "zustand";
 import { UserSchema } from "../schema/user.schema";
 
-type UserStore = {
+type UserStoreSchema = {
   user: UserSchema | null;
   setUser: (user: UserSchema) => void;
   removeUser: () => void;
 };
 
-const useUserStore = create<UserStore>((set) => ({
+const UserStore = create<UserStoreSchema>((set) => ({
   user: null,
   removeUser() {
     set((state) => ({ ...state, user: null }));
@@ -17,10 +17,10 @@ const useUserStore = create<UserStore>((set) => ({
   },
 }));
 
-const useStoreUser = () => {
-  const user = useUserStore((state) => state.user);
-  const removeUser = useUserStore((state) => state.removeUser);
-  const setUser = useUserStore((state) => state.setUser);
+export const useUserStore = () => {
+  const user = UserStore((state) => state.user);
+  const removeUser = UserStore((state) => state.removeUser);
+  const setUser = UserStore((state) => state.setUser);
 
   return {
     user,

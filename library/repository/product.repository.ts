@@ -6,6 +6,20 @@ const getSingleProduct = (productId: number) =>
     url: `/products/${productId}`,
   });
 
+const getAllCategories = () =>
+  apiClient({
+    method: "get",
+    url: `/products/categories`,
+  });
+
+const getProductsByCategory = (category: string) =>
+  apiClient({
+    method: "get",
+    url: `/products/category/${encodeURI(category)}`,
+  });
+
 export const ProductRepository = {
   getSingleProduct,
+  getAllCategories,
+  getProductsByCategory,
 };

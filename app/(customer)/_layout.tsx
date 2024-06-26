@@ -1,10 +1,5 @@
+import { Stack } from "expo-router";
 import React from "react";
-import { SplashScreen, Stack } from "expo-router";
-import {
-  SafeAreaView,
-  useSafeAreaInsets,
-} from "react-native-safe-area-context";
-import { Text, View } from "react-native";
 
 const CustomerLayout = () => {
   return (
@@ -27,6 +22,21 @@ const CustomerLayout = () => {
         name="profile"
         options={{
           title: "Profile",
+          headerShown: true,
+        }}
+      />
+
+      <Stack.Screen
+        name="products/[productId]"
+        options={{
+          title: "Product Detail",
+          headerShown: true,
+        }}
+      />
+      <Stack.Screen
+        name="products/by-category"
+        options={{
+          title: "Products",
           headerShown: true,
         }}
       />

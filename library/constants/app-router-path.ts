@@ -8,5 +8,10 @@ export const AppRouterPath = {
     home: "(customer)/home",
     cart: "(customer)/cart",
     profile: "(customer)/profile",
+    products: {
+      detail: (productId: number | string) =>
+        `(customer)/products/${productId}`,
+      byCategory: `(customer)/products/by-category`,
+    },
   },
 };

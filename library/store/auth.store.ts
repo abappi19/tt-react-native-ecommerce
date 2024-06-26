@@ -2,17 +2,19 @@ import { create } from "zustand";
 import * as SecureStore from "expo-secure-store";
 import { SecureStoreKey } from "../constants/secure-store-key";
 
-
 type AuthStoreSchema = {
   token: string | null;
-  updateToken: (token: string) => void;
+  updateToken: (token: string) => Promise<void>;
   removeToken: () => void;
 };
 
 const AuthStore = create<AuthStoreSchema>((set) => ({
   token: SecureStore.getItem(SecureStoreKey.KEY_AUTH_TOKEN),
-  updateToken(token) {
-    SecureStore.setItemAsync(SecureStoreKey.KEY_AUTH_TOKEN, token).then(() =>
+  async updateToken(token) {
+    return await SecureStore.setItemAsync(
+      SecureStoreKey.KEY_AUTH_TOKEN,
+      token
+    ).then(() =>
       set((state) => ({
         ...state,
         token,

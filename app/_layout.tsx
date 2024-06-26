@@ -39,12 +39,6 @@ const MainLayout = () => {
         }}
       />
       <Stack.Screen
-        name="(admin)"
-        options={{
-          headerShown: false,
-        }}
-      />
-      <Stack.Screen
         name="index"
         options={{
           headerShown: false,
@@ -62,7 +56,10 @@ const ErrorView = () => {
   return (
     <View className="absolute top-0 left-0 bg-red-500 w-[100%]" style={{ top }}>
       {errors.map((error) => (
-        <View className="p-2 flex-row justify-between items-center">
+        <View
+          key={error.id}
+          className="p-2 flex-row justify-between items-center"
+        >
           <Text className="text-yellow-200 font-medium">{error?.text}</Text>
           <TouchableOpacity
             onPress={() => {

@@ -5,14 +5,18 @@ import { jwtDecode } from "jwt-decode";
 import { router } from "expo-router";
 import { AppRouterPath } from "@/library/constants/app-router-path";
 
-export const useOnLoginComplete = () => {
-  const { token } = useAuthStore();
-
+export const useOnLogoutComplete = () => {
   const onComplete = useCallback(() => {
-    if (token) {
+    try {
       if (router.canDismiss()) router.dismissAll();
-      router.replace(AppRouterPath.initial);
+    } catch (e) {
+    } finally {
+      router.replace(AppRouterPath.auth.login);
     }
+
+    // console.log("login complete. token is: ", token);
+    // const obj = jwtDecode(token);
+    // console.log("after decode: ", typeof obj, obj);
   }, []);
 
   return {

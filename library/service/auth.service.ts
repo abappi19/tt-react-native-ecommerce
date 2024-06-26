@@ -42,8 +42,9 @@ export function useAuthLoginService({
     mutate(data, {
       onSuccess(response) {
         if (response.data.token) {
-          updateToken(response.data.token);
-          onComplete(true);
+          updateToken(response.data.token).then(() => {
+            onComplete(true);
+          });
           // addError('Login success ');
         }
       },

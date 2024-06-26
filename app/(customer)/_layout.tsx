@@ -4,7 +4,6 @@ import {
   SafeAreaView,
   useSafeAreaInsets,
 } from "react-native-safe-area-context";
-import AppBar from "@/components/(customer)/app-bar";
 import { Text, View } from "react-native";
 
 const CustomerLayout = () => {
@@ -13,19 +12,22 @@ const CustomerLayout = () => {
       <Stack.Screen
         name="home"
         options={{
+          title: "Home",
           headerShown: false,
         }}
       />
       <Stack.Screen
         name="cart"
         options={{
-          headerShown: false,
+          title: "Cart",
+          headerShown: true,
         }}
       />
       <Stack.Screen
         name="profile"
         options={{
-          headerShown: false,
+          title: "Profile",
+          headerShown: true,
         }}
       />
     </Stack>

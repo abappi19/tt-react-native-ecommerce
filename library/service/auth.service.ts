@@ -1,13 +1,14 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { useHandleError } from "../hooks/use-handle-error";
-import { useQueryAuthLogin } from "../query/auth.query";
+import { useQueryAuthLogin, useRegisterAuthQuery } from "../query/auth.query";
 import { useAuthStore } from "../store/auth.store";
+import { useErrorStore } from "../store/error.store";
 import {
   TValidAuthLoginSchema,
+  TValidAuthRegisterSchema,
   ValidAuthLoginSchema,
+  ValidAuthRegisterSchema,
 } from "../validation/auth.validation";
-import { useErrorStore } from "../store/error.store";
 
 export function useAuthValidateService() {
   const { token } = useAuthStore();
@@ -43,11 +44,12 @@ export function useAuthLoginService({
         if (response.data.token) {
           updateToken(response.data.token);
           onComplete(true);
+          // addError('Login success ');
         }
       },
       onError(error, variables, context) {
         // console.log("error: ", );
-        addError(error as string);
+        addError((error as any).message);
       },
     });
   });
@@ -56,6 +58,58 @@ export function useAuthLoginService({
     isLoading,
     hookForm,
     login,
+  };
+}
+
+export function useAuthRegisterService({
+  onComplete,
+}: {
+  onComplete: (isSuccess: boolean) => void;
+}) {
+  const { addError } = useErrorStore();
+  const { mutate, isLoading } = useRegisterAuthQuery();
+
+  const hookForm = useForm<TValidAuthRegisterSchema>({
+    resolver: zodResolver(ValidAuthRegisterSchema),
+    defaultValues: {
+      username: "",
+      password: "",
+      address: {
+        city: "",
+        number: 0,
+        street: "",
+        zipcode: "",
+        geolocation: {
+          lat: "",
+          long: "",
+        },
+      },
+      email: "",
+      name: {
+        firstname: "",
+        lastname: "",
+      },
+      phone: "",
+    },
+  });
+
+  const register = hookForm.handleSubmit((data) => {
+    mutate(data, {
+      onSuccess(response) {
+        if (response.data) {
+          onComplete(true);
+        }
+      },
+      onError(error, variables, context) {
+        addError(error.message);
+      },
+    });
+  });
+
+  return {
+    isLoading,
+    hookForm,
+    register,
   };
 }
 export function useAuthLogoutService({ onLogout }: { onLogout: () => void }) {

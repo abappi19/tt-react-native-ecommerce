@@ -6,16 +6,24 @@ import { ActivityIndicator, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const InitialScreen = () => {
-  const { token } = useAuthStore();
+  const { token, removeToken } = useAuthStore();
   const [isMounted, setIsMounted] = useState(false);
 
   const handleInitialRoute = () => {
+    const loginAs = "customer";
+
     if (!token) {
       if (router.canDismiss()) {
         router.dismissAll();
       }
       router.replace(AppRouterPath.auth.login);
     }
+
+    if (loginAs === "customer") {
+      router.replace(AppRouterPath.customer.home);
+    }
+
+    // removeToken();
   };
 
   useEffect(() => {

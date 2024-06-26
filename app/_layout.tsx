@@ -33,6 +33,18 @@ const MainLayout = () => {
         }}
       />
       <Stack.Screen
+        name="(customer)"
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="(admin)"
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
         name="index"
         options={{
           headerShown: false,
@@ -45,14 +57,18 @@ const MainLayout = () => {
 const ErrorView = () => {
   const { top } = useSafeAreaInsets();
 
-  const { errors } = useErrorStore();
+  const { errors, removeError } = useErrorStore();
 
   return (
     <View className="absolute top-0 left-0 bg-red-500 w-[100%]" style={{ top }}>
       {errors.map((error) => (
-        <View className="p-1 flex-row justify-between items-center">
-          <Text className="text-yellow-200 font-medium">error</Text>
-          <TouchableOpacity>
+        <View className="p-2 flex-row justify-between items-center">
+          <Text className="text-yellow-200 font-medium">{error?.text}</Text>
+          <TouchableOpacity
+            onPress={() => {
+              removeError(error.id);
+            }}
+          >
             <Ionicons color="#ddd" size={18} name="close-circle" />
           </TouchableOpacity>
         </View>

@@ -20,10 +20,18 @@ const ErrorStore = create<ErrorStoreSchema>((set) => ({
     }));
   },
   addError(text: string) {
+    const error = { id: Date.now(), text };
     set((state) => ({
       ...state,
-      errors: [...state.errors, { id: state.errors.length, text }],
+      errors: [...state.errors, error],
     }));
+
+    setTimeout(() => {
+      set((state) => ({
+        ...state,
+        errors: state.errors.filter((e) => e.id !== error.id),
+      }));
+    }, 2500);
   },
 }));
 

@@ -12,6 +12,7 @@ export const AppRouterPath = {
       detail: (productId: number | string) =>
         `(customer)/products/${productId}`,
       byCategory: `(customer)/products/by-category`,
+      search: `(customer)/products/search`,
     },
   },
 };

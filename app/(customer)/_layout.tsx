@@ -7,7 +7,7 @@ const CustomerLayout = () => {
       <Stack.Screen
         name="home"
         options={{
-          title: "Home",
+          title: "Shop",
           headerShown: false,
         }}
       />
@@ -38,6 +38,13 @@ const CustomerLayout = () => {
         options={{
           title: "Products",
           headerShown: true,
+        }}
+      />
+      <Stack.Screen
+        name="products/search"
+        options={{
+          title: "Search",
+          headerShown: false,
         }}
       />
     </Stack>

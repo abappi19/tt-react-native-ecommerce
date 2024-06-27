@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { UserSchema } from "../schema/user.schema";
 import { QueryKey } from "../constants/query-key";
 import { UserRepository } from "../repository/user.repository";
@@ -30,11 +30,71 @@ export const useGetAllCategoriesQuery = () =>
       ),
   });
 
-export const useGetProductsByCategoryQuery = (category: string) =>
-  useQuery<ProductSchema[]>({
-    queryKey: [QueryKey.QUERY_GET_PRODUCTS_BY_CATEGORY, category],
+export const useGetProductsByCategoryQuery = (category: string) => {
+  const queryKey = [QueryKey.QUERY_GET_PRODUCTS_BY_CATEGORY, category];
+
+  const queryClient = useQueryClient();
+  const query = useQuery<ProductSchema[]>({
+    queryKey,
     queryFn: () =>
       ProductRepository.getProductsByCategory(category).then(
         (res: AxiosResponse<ProductSchema[]>) => res.data
       ),
   });
+
+  const invalidate = () =>
+    queryClient.invalidateQueries({
+      queryKey,
+    });
+
+  return {
+    query,
+    invalidate,
+  };
+};
+
+export const useGetAllProductsQuery = () => {
+  const queryKey = [QueryKey.QUERY_GET_ALL_PRODUCTS];
+
+  const queryClient = useQueryClient();
+  const query = useQuery<ProductSchema[]>({
+    queryKey,
+    queryFn: () =>
+      ProductRepository.getAllProducts().then(
+        (res: AxiosResponse<ProductSchema[]>) => res.data
+      ),
+  });
+
+  const invalidate = () =>
+    queryClient.invalidateQueries({
+      queryKey,
+    });
+
+  return {
+    query,
+    invalidate,
+  };
+};
+
+export const useGetLimitedProductsQuery = (limit: number) => {
+  const queryKey = [QueryKey.QUERY_GET_ALL_PRODUCTS, limit];
+
+  const queryClient = useQueryClient();
+  const query = useQuery<ProductSchema[]>({
+    queryKey,
+    queryFn: () =>
+      ProductRepository.getLimitedProducts(limit).then(
+        (res: AxiosResponse<ProductSchema[]>) => res.data
+      ),
+  });
+
+  const invalidate = () =>
+    queryClient.invalidateQueries({
+      queryKey,
+    });
+
+  return {
+    query,
+    invalidate,
+  };
+};

@@ -18,8 +18,22 @@ const getProductsByCategory = (category: string) =>
     url: `/products/category/${encodeURI(category)}`,
   });
 
+const getLimitedProducts = (limit: number) =>
+  apiClient({
+    method: "get",
+    url: `/products?limit=${limit}`,
+  });
+
+const getAllProducts = () =>
+  apiClient({
+    method: "get",
+    url: `/products`,
+  });
+
 export const ProductRepository = {
   getSingleProduct,
   getAllCategories,
   getProductsByCategory,
+  getLimitedProducts,
+  getAllProducts,
 };

@@ -1,6 +1,8 @@
 import { useGetCartByUserQuery } from "../query/cart.query";
 import {
   useGetAllCategoriesQuery,
+  useGetAllProductsQuery,
+  useGetLimitedProductsQuery,
   useGetProductsByCategoryQuery,
   useGetSingleProductQuery,
 } from "../query/product.query";
@@ -26,11 +28,35 @@ export const useGetAllCategoriesService = () => {
   };
 };
 
+
 export const useGetProductsByCategoryService = (category: string) => {
-  const query = useGetProductsByCategoryQuery(category);
+  const { query, invalidate } = useGetProductsByCategoryQuery(category);
 
   return {
     query,
+    invalidate,
+    data: query.data,
+    isLoading: query.isLoading,
+  };
+};
+
+export const useGetAllProductsService = () => {
+  const { query, invalidate } = useGetAllProductsQuery();
+
+  return {
+    query,
+    invalidate,
+    data: query.data,
+    isLoading: query.isLoading,
+  };
+};
+
+export const useGetLimitedProductsService = (limit:number) => {
+  const { query, invalidate } = useGetLimitedProductsQuery(limit);
+
+  return {
+    query,
+    invalidate,
     data: query.data,
     isLoading: query.isLoading,
   };

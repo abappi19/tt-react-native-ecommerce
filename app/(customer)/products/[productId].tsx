@@ -15,6 +15,7 @@ import {
 } from "expo-router";
 import React, { useEffect, useMemo, useState } from "react";
 import {
+  ActivityIndicator,
   Button,
   FlatList,
   Image,
@@ -105,6 +106,8 @@ const ProductDetailsScreen = () => {
   };
 
   const handleAddToCart = () => {};
+
+  if (isLoading) return <ActivityIndicator size={32} />;
 
   return (
     <>

@@ -6,13 +6,9 @@ import { router } from "expo-router";
 import { AppRouterPath } from "@/library/constants/app-router-path";
 
 export const useOnLoginComplete = () => {
-  const { token } = useAuthStore();
-
   const onComplete = useCallback(() => {
-    if (token) {
-      if (router.canDismiss()) router.dismissAll();
-      router.replace(AppRouterPath.initial);
-    }
+    if (router.canDismiss()) router.dismissAll();
+    router.replace(AppRouterPath.initial);
   }, []);
 
   return {

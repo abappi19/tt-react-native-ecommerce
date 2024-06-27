@@ -66,49 +66,49 @@ const EditProfileScreen = () => {
   return (
     <ScrollView>
       <View className="p-3 xpt-[100] gap-5">
+        <Text>Email: </Text>
         <HookformTextInput
-          defaultValue={data?.email}
           placeholder="Email"
           name="email"
           hookForm={hookForm}
         />
+        <Text>Username: </Text>
         <HookformTextInput
-          defaultValue={data?.email}
           placeholder="Username"
           name="username"
           hookForm={hookForm}
         />
 
+        <Text>First Name: </Text>
         <HookformTextInput
-          defaultValue={data?.email}
           placeholder="First Name"
           name="name.firstname"
           hookForm={hookForm}
         />
 
+        <Text>Last Name: </Text>
         <HookformTextInput
-          defaultValue={data?.email}
           placeholder="Last Name"
           name="name.lastname"
           hookForm={hookForm}
         />
 
+        <Text>City: </Text>
         <HookformTextInput
-          defaultValue={data?.email}
           placeholder="City"
           name="address.city"
           hookForm={hookForm}
         />
 
+        <Text>Street: </Text>
         <HookformTextInput
-          defaultValue={data?.email}
           placeholder="Street"
           name="address.street"
           hookForm={hookForm}
         />
 
+        <Text>Zipcode: </Text>
         <HookformTextInput
-          defaultValue={data?.email}
           placeholder="Zipcode"
           name="address.zipcode"
           hookForm={hookForm}
@@ -123,30 +123,30 @@ const EditProfileScreen = () => {
           </TouchableOpacity>
         </View>
 
+        <Text>Latitude: </Text>
         <HookformTextInput
-          defaultValue={data?.address.geolocation.lat}
           placeholder="Latitude"
           name="address.geolocation.lat"
           hookForm={hookForm}
           editable={false}
         />
 
+        <Text>Longitude: </Text>
         <HookformTextInput
-          defaultValue={data?.address.geolocation.long}
           placeholder="Longitude"
           name="address.geolocation.long"
           hookForm={hookForm}
           editable={false}
         />
 
+        <Text>Phone: </Text>
         <HookformTextInput
-          defaultValue={data?.email}
           placeholder="Phone"
           name="phone"
           hookForm={hookForm}
         />
+        <Text>Password: </Text>
         <HookformTextInput
-          defaultValue={data?.email}
           placeholder="Password"
           name="password"
           hookForm={hookForm}

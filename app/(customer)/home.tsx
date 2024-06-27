@@ -50,7 +50,8 @@ const HomeScreen = () => {
       <ScrollView>
         <View className="p-2">
           <Image
-            className="w-full h-[180]"
+            className="w-full h-[180px]"
+            resizeMethod="resize"
             resizeMode="contain"
             source={require("@/assets/images/graphics/payday-sell.png")}
           />

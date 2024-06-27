@@ -1,5 +1,6 @@
 import ProductListItem from "@/components/list-item/product-list-item";
 import { CartSchema } from "@/library/schema/cart.schema";
+import { useUpdateCartService } from "@/library/service/cart.service";
 import {
   useGetProductsByCategoryService,
   useGetSingleProductService,
@@ -7,6 +8,7 @@ import {
 import { useErrorStore } from "@/library/store/error.store";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import {
+  router,
   useFocusEffect,
   useLocalSearchParams,
   useNavigation,
@@ -52,6 +54,12 @@ const ProductDetailsScreen = () => {
     [productId, _productsByCategory]
   );
 
+  const { isLoading: isUpdateCartLoading, updateCart } = useUpdateCartService({
+    onComplete() {
+      router.back();
+    },
+  });
+
   const nav = useNavigation();
 
   useEffect(() => {
@@ -70,7 +78,7 @@ const ProductDetailsScreen = () => {
 
   useFocusEffect(() => {
     query.refetch();
-    addError("working");
+    // addError("working");
   });
 
   const handleAddQuantity = () => setQuantity((o) => ++o);
@@ -78,8 +86,22 @@ const ProductDetailsScreen = () => {
 
   const handleUpdateCart = () => {
     if (!cartData || fromCart != "true") {
+      addError("Invalid cart details.");
       return;
     }
+
+    console.log("updating cart item: ", cartData);
+
+    cartData.products = cartData.products.map((product) => {
+      if (product.productId === Number(productId)) {
+        product.quantity = quantity;
+      }
+      return product;
+    });
+
+    console.log("latest cart item: ", cartData);
+
+    updateCart(cartData);
   };
 
   const handleAddToCart = () => {};
@@ -138,7 +160,7 @@ const ProductDetailsScreen = () => {
           <Button
             onPress={fromCart === "true" ? handleUpdateCart : handleAddToCart}
             color="#36A005"
-            disabled={Number(cartQuantity) === quantity}
+            disabled={Number(cartQuantity) === quantity || isUpdateCartLoading}
             title={fromCart === "true" ? "Update cart" : "Add to cart"}
           />
           {/* <Button color="#E99F00" title="Buy" /> */}

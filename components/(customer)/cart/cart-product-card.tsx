@@ -17,6 +17,7 @@ export default function CartProductCard({
 }) {
   const { data, isLoading, query } = useGetSingleProductService(productId);
 
+  const cartData: CartSchema = JSON.parse(cartJson);
 
   const handleProductClick = () => {
     router.push({
@@ -24,7 +25,7 @@ export default function CartProductCard({
       params: {
         quantity,
         fromCart: "true",
-        cartJson
+        cartJson,
       },
     });
   };
@@ -54,6 +55,7 @@ export default function CartProductCard({
             {data?.title}
           </Text>
           <Text className="text-[#888787]">{data?.category}</Text>
+          <Text className="text-[#289133]">{new Date(cartData.date).toDateString()}</Text>
           <Text className="flex-grow align-bottom pb-2 xself-end font-bold pt-2">{`$ ${data?.price}`}</Text>
         </View>
         <Text className="text-xl ps-2 pe-5 font-bold">{quantity}</Text>

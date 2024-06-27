@@ -13,6 +13,7 @@ import { useJWTParser } from "@/library/hooks/use-jwt-parser";
 import { TokenDataSchema } from "@/library/schema/token-data.schema";
 import CartProductCard from "@/components/(customer)/cart/cart-product-card";
 import { useIsFocused } from "@react-navigation/native";
+import { ProductSchema } from "@/library/schema/product.schema";
 
 const CartScreen = () => {
   const { token } = useAuthStore();
@@ -24,9 +25,14 @@ const CartScreen = () => {
   const focused = useIsFocused();
 
   const products = useMemo(() => {
-    if (!data || !data[0]) return [];
-
-    return data[0].products || [];
+    if (!data || !data) return [];
+    const pds: { productId: number; quantity: number; cartJson: string }[] = [];
+    data.forEach((cart) => {
+      pds.push(
+        ...cart.products.map((p) => ({ ...p, cartJson: JSON.stringify(cart) }))
+      );
+    });
+    return pds;
   }, [data]);
 
   useEffect(() => {
@@ -53,7 +59,7 @@ const CartScreen = () => {
             key={item.productId}
             productId={item.productId}
             quantity={item.quantity}
-            cartJson={JSON.stringify((data || [])[0])}
+            cartJson={item.cartJson}
           />
         )}
       />

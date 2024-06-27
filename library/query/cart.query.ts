@@ -1,4 +1,4 @@
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { UserSchema } from "../schema/user.schema";
 import { QueryKey } from "../constants/query-key";
 import { UserRepository } from "../repository/user.repository";
@@ -27,3 +27,16 @@ export const useGetCartByUserQuery = ({ userId }: { userId: number }) => {
     invalidate,
   };
 };
+
+export const useUpdateCartQuery = () =>
+  useMutation<
+    {
+      data: UserSchema;
+    },
+    {
+      message: string;
+    },
+    CartSchema
+  >({
+    mutationFn: CartRepository.updateCart,
+  });

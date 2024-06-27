@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "ecommerce-app",
+    "name": "TT Shop",
     "slug": "ecommerce-app",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -13,14 +13,18 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "runtimeVersion": {
+        "policy": "appVersion"
+      }
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+        "backgroundColor": "#7476FF"
       },
-      "package": "com.bappi.ecommerce.app"
+      "package": "com.bappi.ecommerce.app",
+      "runtimeVersion": "1.0.0"
     },
     "web": {
       "bundler": "metro",
@@ -41,6 +45,9 @@
       "eas": {
         "projectId": "873f2a8b-0c1c-48e9-a446-1f98e9005a88"
       }
+    },
+    "updates": {
+      "url": "https://u.expo.dev/873f2a8b-0c1c-48e9-a446-1f98e9005a88"
     }
   }
 }

@@ -1,4 +1,4 @@
-rootProject.name = 'ecommerce-app'
+rootProject.name = 'TT Shop'
 
 dependencyResolutionManagement {
   versionCatalogs {

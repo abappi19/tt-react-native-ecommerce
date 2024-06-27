@@ -1,21 +1,37 @@
 import HookformTextInput from "@/components/input/hookform-input";
 import { AppRouterPath } from "@/library/constants/app-router-path";
-import { useOnLoginComplete } from "@/library/hooks/auth/use-on-login-complete";
-import {
-  useAuthLoginService,
-  useAuthRegisterService,
-} from "@/library/service/auth.service";
+import { useAuthRegisterService } from "@/library/service/auth.service";
+import { useErrorStore } from "@/library/store/error.store";
+import * as Location from "expo-location";
 import { router } from "expo-router";
-import React from "react";
-import { Button, ScrollView, StyleSheet, Text, View } from "react-native";
+import React, { useEffect, useState } from "react";
+import { Button, ScrollView, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const RegisterScreen = () => {
+  const { addError } = useErrorStore();
+  const [currentLocation, setCurrentLocation] =
+    useState<Location.LocationObject | null>(null);
   const { hookForm, isLoading, register } = useAuthRegisterService({
     onComplete() {
       router.replace(AppRouterPath.auth.login);
     },
   });
+
+  useEffect(() => {
+    (async () => {
+      const { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== Location.PermissionStatus.GRANTED) {
+        addError(
+          "Location permission is not granted. Please grant permission to use current location."
+        );
+        return;
+      }
+      const l: Location.LocationObject =
+        await Location.getCurrentPositionAsync();
+      setCurrentLocation(l);
+    })();
+  }, []);
 
   const handleLoginClick = () => {
     router.replace(AppRouterPath.auth.login);
@@ -43,6 +59,8 @@ const RegisterScreen = () => {
                     phone:'1-570-236-7033'
                 }
    */
+
+  console.log("current location is: ", currentLocation);
 
   return (
     <SafeAreaView>
@@ -88,6 +106,9 @@ const RegisterScreen = () => {
             name="address.zipcode"
             hookForm={hookForm}
           />
+          <Text>Geolocation: </Text>
+          <Text>{`Latitude: ${currentLocation?.coords.latitude}`}</Text>
+          <Text>{`Longitude: ${currentLocation?.coords.longitude}`}</Text>
           <HookformTextInput
             placeholder="Phone"
             name="phone"

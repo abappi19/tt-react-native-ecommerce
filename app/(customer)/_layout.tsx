@@ -27,6 +27,14 @@ const CustomerLayout = () => {
       />
 
       <Stack.Screen
+        name="edit-profile"
+        options={{
+          title: "Edit Profile",
+          headerShown: true,
+        }}
+      />
+
+      <Stack.Screen
         name="products/[productId]"
         options={{
           title: "Product Detail",

@@ -11,7 +11,6 @@ const InitialScreen = () => {
 
   const handleInitialRoute = () => {
     const loginAs = "customer";
-
     if (!token) {
       if (router.canDismiss()) {
         router.dismissAll();
@@ -20,7 +19,6 @@ const InitialScreen = () => {
     } else if (loginAs === "customer") {
       return router.replace(AppRouterPath.customer.home);
     }
-
     // removeToken();
   };
 
@@ -43,3 +41,4 @@ const InitialScreen = () => {
 };
 
 export default InitialScreen;
+

@@ -1,3 +1,4 @@
+import { AppRouterPath } from "@/library/constants/app-router-path";
 import { useOnLogoutComplete } from "@/library/hooks/auth/use-on-logout-complete";
 import { useJWTParser } from "@/library/hooks/use-jwt-parser";
 import { TokenDataSchema } from "@/library/schema/token-data.schema";
@@ -5,6 +6,7 @@ import { useAuthLogoutService } from "@/library/service/auth.service";
 import { useGetSingleUserService } from "@/library/service/user.service";
 import { useAuthStore } from "@/library/store/auth.store";
 import { Ionicons } from "@expo/vector-icons";
+import { router } from "expo-router";
 import React from "react";
 import { ActivityIndicator, Alert, Button, Text, View } from "react-native";
 
@@ -21,6 +23,9 @@ const ProfileScreen = () => {
 
   const handleLogoutPress = () => {
     logout();
+  };
+  const handleEditPress = () => {
+    router.push(AppRouterPath.customer.editProfile);
   };
 
   if (isLoading)
@@ -39,7 +44,6 @@ const ProfileScreen = () => {
         <Text className="font-medium">Email: </Text>
         <Text>{data?.email}</Text>
       </View>
-
 
       <Text className="font-bold text-lg p-3">Address:</Text>
 
@@ -64,6 +68,7 @@ const ProfileScreen = () => {
       </View>
 
       <View className="p-8" />
+      <Button onPress={handleEditPress} title="Edit" />
       <Button onPress={handleLogoutPress} title="Logout" />
     </View>
   );

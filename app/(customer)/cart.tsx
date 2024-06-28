@@ -14,6 +14,7 @@ import { TokenDataSchema } from "@/library/schema/token-data.schema";
 import CartProductCard from "@/components/(customer)/cart/cart-product-card";
 import { useIsFocused } from "@react-navigation/native";
 import { ProductSchema } from "@/library/schema/product.schema";
+import LoadingView from "@/components/loading-view";
 
 const CartScreen = () => {
   const { token } = useAuthStore();
@@ -41,9 +42,7 @@ const CartScreen = () => {
 
   if (isLoading)
     return (
-      <View className="pt-10 items-center justify-center">
-        <ActivityIndicator size={32} />
-      </View>
+      <LoadingView />
     );
 
   return (

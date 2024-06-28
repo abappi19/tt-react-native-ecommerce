@@ -1,4 +1,5 @@
 import HookformTextInput from "@/components/input/hookform-input";
+import LoadingView from "@/components/loading-view";
 import { useJWTParser } from "@/library/hooks/use-jwt-parser";
 import { TokenDataSchema } from "@/library/schema/token-data.schema";
 import {
@@ -61,60 +62,60 @@ const EditProfileScreen = () => {
     setIsGeoLocationUpdating(false);
   };
 
-  if (isLoading) return <ActivityIndicator size={32} />;
+  if (isLoading) return <LoadingView />;
 
   return (
     <ScrollView>
-      <View className="p-3 xpt-[100] gap-5">
-        <Text>Email: </Text>
+      <View className="p-3 xpt-[100] xgap-5">
+        <Text className="pt-3">Email: </Text>
         <HookformTextInput
           placeholder="Email"
           name="email"
           hookForm={hookForm}
         />
-        <Text>Username: </Text>
+        <Text className="pt-3">Username: </Text>
         <HookformTextInput
           placeholder="Username"
           name="username"
           hookForm={hookForm}
         />
 
-        <Text>First Name: </Text>
+        <Text className="pt-3">First Name: </Text>
         <HookformTextInput
           placeholder="First Name"
           name="name.firstname"
           hookForm={hookForm}
         />
 
-        <Text>Last Name: </Text>
+        <Text className="pt-3">Last Name: </Text>
         <HookformTextInput
           placeholder="Last Name"
           name="name.lastname"
           hookForm={hookForm}
         />
 
-        <Text>City: </Text>
+        <Text className="pt-3">City: </Text>
         <HookformTextInput
           placeholder="City"
           name="address.city"
           hookForm={hookForm}
         />
 
-        <Text>Street: </Text>
+        <Text className="pt-3">Street: </Text>
         <HookformTextInput
           placeholder="Street"
           name="address.street"
           hookForm={hookForm}
         />
 
-        <Text>Zipcode: </Text>
+        <Text className="pt-3">Zipcode: </Text>
         <HookformTextInput
           placeholder="Zipcode"
           name="address.zipcode"
           hookForm={hookForm}
         />
         <View className="flex-row items-center justify-between">
-          <Text>Geolocation: </Text>
+          <Text className="pt-3">Geolocation: </Text>
           <TouchableOpacity
             onPress={handleUpdateGeoLocation}
             disabled={isGeoLocationUpdating}
@@ -123,7 +124,7 @@ const EditProfileScreen = () => {
           </TouchableOpacity>
         </View>
 
-        <Text>Latitude: </Text>
+        <Text className="pt-3">Latitude: </Text>
         <HookformTextInput
           placeholder="Latitude"
           name="address.geolocation.lat"
@@ -131,7 +132,7 @@ const EditProfileScreen = () => {
           editable={false}
         />
 
-        <Text>Longitude: </Text>
+        <Text className="pt-3">Longitude: </Text>
         <HookformTextInput
           placeholder="Longitude"
           name="address.geolocation.long"
@@ -139,18 +140,19 @@ const EditProfileScreen = () => {
           editable={false}
         />
 
-        <Text>Phone: </Text>
+        <Text className="pt-3">Phone: </Text>
         <HookformTextInput
           placeholder="Phone"
           name="phone"
           hookForm={hookForm}
         />
-        <Text>Password: </Text>
+        <Text className="pt-3">Password: </Text>
         <HookformTextInput
           placeholder="Password"
           name="password"
           hookForm={hookForm}
         />
+        <View className="pt-5" />
         <Button
           title={isupdateUesrLoding ? "- - -" : "Update"}
           onPress={isupdateUesrLoding ? undefined : update}

@@ -8,7 +8,7 @@ import { QueryClient } from "@tanstack/react-query";
 import { PersistQueryClientProvider } from "@tanstack/react-query-persist-client";
 import { SplashScreen, Stack } from "expo-router";
 import React from "react";
-import { Text, TouchableOpacity, View } from "react-native";
+import { LogBox, Text, TouchableOpacity, View } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import {
   SafeAreaProvider,
@@ -20,7 +20,8 @@ export const unstable_settings = {
   initialRouteName: AppRouterPath.initial,
 };
 
-//hide. otherwise remain visible always. don't know why
+LogBox.ignoreAllLogs();
+// SplashScreen.preventAutoHideAsync();
 SplashScreen.hideAsync();
 
 const MainLayout = () => {

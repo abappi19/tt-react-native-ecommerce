@@ -1,3 +1,4 @@
+import LoadingView from "@/components/loading-view";
 import { AppRouterPath } from "@/library/constants/app-router-path";
 import { useAuthStore } from "@/library/store/auth.store";
 import { router } from "expo-router";
@@ -33,12 +34,9 @@ const InitialScreen = () => {
 
   return (
     <SafeAreaView>
-      <View className="h-[100%] items-center justify-center">
-        <ActivityIndicator size={32} />
-      </View>
+      <LoadingView />
     </SafeAreaView>
   );
 };
 
 export default InitialScreen;
-

@@ -1,4 +1,5 @@
 import ProductListItem from "@/components/list-item/product-list-item";
+import LoadingView from "@/components/loading-view";
 import { CartSchema } from "@/library/schema/cart.schema";
 import { useUpdateCartService } from "@/library/service/cart.service";
 import {
@@ -107,7 +108,7 @@ const ProductDetailsScreen = () => {
 
   const handleAddToCart = () => {};
 
-  if (isLoading) return <ActivityIndicator size={32} />;
+  if (isLoading) return <LoadingView />;
 
   return (
     <>

@@ -1,5 +1,6 @@
 import CartProductCard from "@/components/(customer)/cart/cart-product-card";
 import ProductListItem from "@/components/list-item/product-list-item";
+import LoadingView from "@/components/loading-view";
 import { AppRouterPath } from "@/library/constants/app-router-path";
 import {
   useGetProductsByCategoryService,
@@ -34,6 +35,8 @@ const ProductDetailsScreen = () => {
       ),
     });
   }, [category]);
+
+  if (isLoading) return <LoadingView />;
 
   return (
     <>

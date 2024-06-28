@@ -1,3 +1,4 @@
+import LoadingView from "@/components/loading-view";
 import { AppRouterPath } from "@/library/constants/app-router-path";
 import { useOnLogoutComplete } from "@/library/hooks/auth/use-on-logout-complete";
 import { useJWTParser } from "@/library/hooks/use-jwt-parser";
@@ -30,9 +31,7 @@ const ProfileScreen = () => {
 
   if (isLoading)
     return (
-      <View>
-        <ActivityIndicator size={24} />
-      </View>
+      <LoadingView />
     );
 
   return (
